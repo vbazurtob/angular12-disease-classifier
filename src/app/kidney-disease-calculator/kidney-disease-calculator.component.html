@@ -1,0 +1,21 @@
+<h3>Kidney Disease Calculator</h3>
+
+<mat-label>
+    Paste in the textarea the blood pressure data
+</mat-label>
+
+<div>
+<textarea #inputTextData  rows="10" cols="100">
+
+[
+{SysBP: 120, DiaBP: 90, atDate: '2018/10/31'},
+{ SysBP: 115, DiaBP: 100, atDate: '2018/10/20'}
+]
+
+</textarea>
+
+</div>
+
+<a mat-raised-button color="primary" (click)="parseData($event)">
+    Parse Data
+</a>

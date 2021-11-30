@@ -1,0 +1,67 @@
+<h3 class="headline1 title">Hypertension Calculator</h3>
+
+<div class="flex-row flex-space-between general-container">
+    <div class="input-area-section">
+        <div class="lbl-instructions">
+            Paste in the textarea the blood pressure data
+        </div>
+        <div>
+        <textarea #inputTextData  rows="10" cols="80">
+        [
+            {SysBP: 444, DiaBP: 90, atDate: '2011/10/31'}, {SysBP: 120, DiaBP: 90, atDate: '2010/10/31'},
+            { SysBP: 115, DiaBP: 100, atDate: '2012/10/20'}
+        ]
+        </textarea>
+        </div>
+        <a mat-raised-button color="primary" (click)="parseData($event)">
+            Parse Data
+        </a>
+    </div>
+
+
+
+
+
+
+    <div class="results-container">
+        <mat-card>
+            <h3 class="headline2">Results</h3>
+            <div class="flex-row flex-space-between">
+                <div class="lbl-data">
+                    Last reading:
+                </div>
+                <div>
+                    {{lastReading.atDate == 0 ? '-' : lastReading.atDate | date: 'yyyy/MM/dd' }}
+                </div>
+            </div>
+            <div class="flex-row flex-space-between">
+                <div class="lbl-data">
+                    SysBP:
+                </div>
+                <div>
+                    {{lastReading.SysBP}}
+                </div>
+            </div>
+
+            <div class="flex-row flex-space-between">
+                <div class="lbl-data">
+                    DiaBP:
+                </div>
+                <div>
+                    {{lastReading.DiaBP}}
+                </div>
+            </div>
+
+            <div class="flex-row flex-space-between">
+                <div class="lbl-data">
+                    Classification:
+                </div>
+                <div>
+                    {{classifyReading()}}
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>
+
+
