@@ -2,7 +2,6 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {EgfrInputParserService} from "../service/egfr-input-parser.service";
 import {EgfrDataClassifierService} from "../service/egfr-data-classifier.service";
 import {EgfrDataModel} from "../model/egfr-data.model";
-import {BloodPressureDataModel} from "../model/blood-pressure-data.model";
 
 @Component({
   selector: 'app-kidney-disease-calculator',
@@ -19,6 +18,7 @@ export class KidneyDiseaseCalculatorComponent implements OnInit {
   };
   drops: any[] = []
   displayedColumns = ['previous_e', 'previous_d', 'next_e', 'next_d', 'drop']
+  errorMessage = '';
 
   constructor(private inputParser: EgfrInputParserService, private classifier: EgfrDataClassifierService) {
   }
@@ -27,6 +27,7 @@ export class KidneyDiseaseCalculatorComponent implements OnInit {
   }
 
   parseData(){
+    this.errorMessage = '';
     const inputData = this.inputTextData.nativeElement.value;
     const result = this.inputParser.parse(inputData.trim());
     console.log('RESULT');
@@ -34,6 +35,7 @@ export class KidneyDiseaseCalculatorComponent implements OnInit {
 
     if(result['error']){
       console.log(result.error);
+      this.errorMessage = result.error;
       return;
     }
 

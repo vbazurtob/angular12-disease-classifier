@@ -25,7 +25,13 @@
     </div>
 </div>
 
-<div class="results-container">
+<div class="error-message" *ngIf="errorMessage!=''">
+    {{errorMessage}}
+</div>
+<div  *ngIf="errorMessage==''" class="results-container">
+
+
+
     <mat-card class="results-card" *ngIf="lastReading.atDate >= 0">
         <h3 class="headline2">Results</h3>
         <div  class="flex-row flex-space-between">
