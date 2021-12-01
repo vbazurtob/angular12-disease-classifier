@@ -9,12 +9,23 @@ import {
 
 export class EgfrInputParserService implements InputParser{
 
+    // readonly strictArrayCheck = /^\[[\d|\D|\s*]*\]{1}$/g
+// ^[\s*|\[][\d|\D|\s*]*[\]{1}|\s*]$
+//     readonly jsonArrRegexp = /^\[\s*(\{\s*[\d\D\s*]*\s*\}{1}\,{0,1})+\s*\]$/g
     readonly jsonObjRegexp = /\{{1}\s*eGFR:\s*\d+\s*\,\s*atDate:\s*\'\d{4}\/\d{2}\/\d{2}\'\s*\}{1}\,{0,1}/g;
+    // readonly regexpArrObj = new RegExp(this.jsonArrRegexp, 'g');
     readonly regexpObj = new RegExp(this.jsonObjRegexp, 'g');
 
 
     parse(inputData: string): any {
         let sanitizedInputData = inputData.trim();
+
+        // const arrayMatched = inputData.trim().match(this.regexpArrObj);
+        // // console.log(arrayMatched);
+        // if( arrayMatched === null || arrayMatched === undefined || arrayMatched[0] === null){
+        //     // console.log('Is not formatted as array');
+        //     return {error: 'Is not formatted as array'};
+        // }
         if(isInputStrArray(sanitizedInputData)){
             return {error: 'Input data is not formatted as a valid array of readings'};
         }
