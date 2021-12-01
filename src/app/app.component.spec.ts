@@ -20,16 +20,12 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'ng12diseaseempty'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('ng12diseaseempty');
-  });
 
-  it('should render title', () => {
+
+  it('should render menu link', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('ng12diseaseempty app is running!');
+    expect(compiled.querySelector('.menu-option')?.textContent).toContain('Hypertension Calc');
   });
 });
