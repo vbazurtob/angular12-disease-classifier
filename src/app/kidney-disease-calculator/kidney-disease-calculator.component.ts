@@ -1,7 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {parse} from "@angular/compiler/src/render3/view/style_parser";
+import {EgfrInputParserService} from "../service/egfr-input-parser.service";
+import {EgfrDataClassifierService} from "../service/egfr-data-classifier.service";
+import {EgfrDataModel} from "../model/egfr-data.model";
 import {BloodPressureDataModel} from "../model/blood-pressure-data.model";
-import {BloodPressureInputParser} from "../service/BloodPressureInputParser";
 
 @Component({
   selector: 'app-kidney-disease-calculator',
@@ -12,17 +13,73 @@ export class KidneyDiseaseCalculatorComponent implements OnInit {
 
   @ViewChild('inputTextData') inputTextData!: ElementRef<HTMLTextAreaElement>;
 
-  constructor(private svc: BloodPressureInputParser) { }
+  lastReading: EgfrDataModel = {
+    eGFR: 0,
+    atDate: -1
+  };
+  drops: any[] = []
+  displayedColumns = ['previous_e', 'previous_d', 'next_e', 'next_d', 'drop']
+
+  constructor(private inputParser: EgfrInputParserService, private classifier: EgfrDataClassifierService) {
+  }
 
   ngOnInit(): void {
   }
 
-  parseData(evt: any){
+  parseData(){
     const inputData = this.inputTextData.nativeElement.value;
-
-    const result = this.svc.parse(inputData.trim());
+    const result = this.inputParser.parse(inputData.trim());
     console.log('RESULT');
     console.log(result);
+
+    if(result['error']){
+      console.log(result.error);
+      return;
+    }
+
+    function compare (a: EgfrDataModel, b: EgfrDataModel) { return a.atDate - b.atDate ; }
+
+    result.sort(compare);
+    console.log(result);
+
+    const consecutiveArr: any = [];
+    result.reduce((prev: any, curr: any) => {
+
+      console.log(prev);
+      console.log(curr);
+      console.log('---');
+
+      if(prev.eGFR != 0) {
+        let dropPercentage = ((prev.eGFR - curr.eGFR) / prev.eGFR) ;
+        // if(prev.eGFR  >=  (curr.eGFR * 0.2)){
+        console.log(dropPercentage);
+        if (dropPercentage >= 0.2) {
+
+          consecutiveArr.push(
+              {
+                previous: prev,
+                current: curr,
+                drop: dropPercentage
+              }
+          );
+        }
+      }
+      return curr;
+    });
+
+    console.log('DROPS');
+    console.log(consecutiveArr);
+
+    this.lastReading = result[result.length - 1];
+    this.drops = consecutiveArr;
+
+  }
+
+  classifyReading(){
+    if(this.lastReading.atDate < 0 ){
+      return '';
+    }
+    return this.classifier.classify(this.lastReading);
   }
 
 }

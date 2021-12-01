@@ -1,21 +1,98 @@
-<h3>Kidney Disease Calculator</h3>
+<h3 class="headline1 title">Kidney Disease Calculator</h3>
 
-<mat-label>
-    Paste in the textarea the blood pressure data
-</mat-label>
+<div class="flex-row flex-space-between general-container">
+    <div class="input-area-section">
+        <div class="lbl-instructions">
+            Paste in the textarea the blood pressure data
+        </div>
+        <div>
+        <textarea #inputTextData  rows="10" cols="70">
+      [
 
-<div>
-<textarea #inputTextData  rows="10" cols="100">
+{eGFR: 65, atDate: '2012/10/31'},
+{eGFR: 70, atDate: '2011/10/20'},
+{eGFR: 1220, atDate: '2013/10/20'},
 
-[
-{SysBP: 120, DiaBP: 90, atDate: '2018/10/31'},
-{ SysBP: 115, DiaBP: 100, atDate: '2018/10/20'}
+{eGFR: 0, atDate: '2001/10/20'},
+{eGFR: 120, atDate: '2019/10/20'}
 ]
 
-</textarea>
-
+        </textarea>
+        </div>
+        <a mat-raised-button color="primary" (click)="parseData()">
+            Parse Data
+        </a>
+    </div>
 </div>
 
-<a mat-raised-button color="primary" (click)="parseData($event)">
-    Parse Data
-</a>
+<div class="results-container">
+    <mat-card class="results-card" *ngIf="lastReading.atDate >= 0">
+        <h3 class="headline2">Results</h3>
+        <div  class="flex-row flex-space-between">
+            <div class="lbl-data">
+                Last reading:
+            </div>
+            <div>
+                {{lastReading.atDate == 0 ? '-' : lastReading.atDate | date: 'yyyy/MM/dd' }}
+            </div>
+        </div>
+        <div class="flex-row flex-space-between">
+            <div class="lbl-data">
+                eGFR:
+            </div>
+            <div>
+                {{lastReading.eGFR}}
+            </div>
+        </div>
+        <div class="flex-row flex-space-between">
+            <div class="lbl-data">
+                Classification:
+            </div>
+            <div>
+                {{classifyReading()}}
+            </div>
+        </div>
+    </mat-card>
+
+    <mat-table #table [dataSource]="drops" class="results-table" *ngIf="lastReading.atDate >= 0">
+
+        <ng-container matColumnDef="previous_e">
+            <mat-header-cell *matHeaderCellDef> Previous eGFR </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                 {{element.previous.eGFR}}
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="previous_d">
+            <mat-header-cell *matHeaderCellDef> Previous date </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                    {{element.previous.atDate | date: 'yyyy/MM/dd'}}
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="next_e">
+            <mat-header-cell *matHeaderCellDef> Next eGFR </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.current.eGFR}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="next_d">
+            <mat-header-cell *matHeaderCellDef> Next Date </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.current.atDate | date: 'yyyy/MM/dd'}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="drop">
+            <mat-header-cell *matHeaderCellDef> % Drop </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.drop | percent }}  </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="6" class="no-data-text">No data to show</td>
+        </tr>
+    </mat-table>
+
+</div>

@@ -1,4 +1,6 @@
-export interface EgfrDataModel{
+import {InputData} from "./input-data";
+
+export interface EgfrDataModel extends  InputData{
     eGFR: number,
-    atDate: Date
+    atDate: number
 }

@@ -1,0 +1,44 @@
+.title{
+  width: 100%;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.general-container{
+  margin-left: 5%;
+  margin-right: 5%;
+
+  justify-items: flex-end;
+}
+.results-container{
+  width: 80%;
+  padding-top: 32px;
+  margin-left: 5%;
+}
+
+.results-card{
+  width: 30%;
+}
+
+.results-table{
+  width: 80%;
+  margin-top: 24px;
+}
+
+.headline1{
+  font-size: 2em;
+}
+
+.headline2{
+  font-weight: bold;
+}
+
+.lbl-instructions{
+  padding-top: 8px;
+  padding-bottom: 8px;
+
+}
+
+.no-data-text{
+  text-align: center;
+}

@@ -1,6 +1,6 @@
-import {InputParser} from "../model/InputParser";
+import {InputParser} from "../model/input-parser";
 
-export class BloodPressureInputParser implements  InputParser {
+export class BloodPressureInputParserService implements  InputParser {
 
     readonly jsonArrRegexp = /^\[{1}\s*\{\s*[\d\D\s*]*\s*\}{1}\s*\]{1}\s*$/g;
     readonly jsonObjRegexp = /\{{1}\s*SysBP:\s*\d+\s*\,\s*DiaBP:\s*\d+\s*\,\s*atDate:\s*\'\d{4}\/\d{2}\/\d{2}\'\s*\}{1}\,{0,1}/g;

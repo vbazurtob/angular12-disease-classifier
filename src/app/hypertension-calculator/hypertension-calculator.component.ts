@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {BloodPressureInputParser} from "../service/BloodPressureInputParser";
+import {BloodPressureInputParserService} from "../service/blood-pressure-input-parser.service";
 import {BloodPressureDataModel} from "../model/blood-pressure-data.model";
-import {Classifier} from "../service/Classifier";
+import {BloodPressureClassifierService} from "../service/blood-pressure-classifier.service";
 
 @Component({
   selector: 'app-hypertension-calculator',
@@ -18,7 +18,7 @@ export class HypertensionCalculatorComponent implements OnInit {
     atDate: 0
   };
 
-  constructor(private inputParser: BloodPressureInputParser, private classifier: Classifier) {
+  constructor(private inputParser: BloodPressureInputParserService, private classifier: BloodPressureClassifierService) {
   }
 
   ngOnInit(): void {
@@ -48,6 +48,6 @@ export class HypertensionCalculatorComponent implements OnInit {
     if(this.lastReading.DiaBP == 0 || this.lastReading.DiaBP == 0){
       return '';
     }
-    return this.classifier.classifyBloodPressure(this.lastReading);
+    return this.classifier.classify(this.lastReading);
   }
 }

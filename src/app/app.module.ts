@@ -7,8 +7,10 @@ import { HypertensionCalculatorComponent } from './hypertension-calculator/hyper
 import { KidneyDiseaseCalculatorComponent } from './kidney-disease-calculator/kidney-disease-calculator.component';
 import {MaterialModule} from "./material.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {BloodPressureInputParser} from "./service/BloodPressureInputParser";
-import {Classifier} from "./service/Classifier";
+import {BloodPressureInputParserService} from "./service/blood-pressure-input-parser.service";
+import {BloodPressureClassifierService} from "./service/blood-pressure-classifier.service";
+import {EgfrInputParserService} from "./service/egfr-input-parser.service";
+import {EgfrDataClassifierService} from "./service/egfr-data-classifier.service";
 
 @NgModule({
   declarations: [
@@ -23,8 +25,10 @@ import {Classifier} from "./service/Classifier";
     BrowserAnimationsModule
   ],
   providers: [
-      BloodPressureInputParser,
-      Classifier
+    BloodPressureInputParserService,
+    BloodPressureClassifierService,
+    EgfrInputParserService,
+    EgfrDataClassifierService
   ],
   bootstrap: [AppComponent]
 })
