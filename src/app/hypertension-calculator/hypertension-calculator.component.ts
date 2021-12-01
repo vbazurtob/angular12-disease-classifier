@@ -8,41 +8,36 @@ import {BloodPressureClassifierService} from "../service/blood-pressure-classifi
   templateUrl: './hypertension-calculator.component.html',
   styleUrls: ['./hypertension-calculator.component.scss']
 })
-export class HypertensionCalculatorComponent implements OnInit {
+export class HypertensionCalculatorComponent {
 
   @ViewChild('inputTextData') inputTextData!: ElementRef<HTMLTextAreaElement>;
 
-  lastReading: BloodPressureDataModel = {
+  readonly  initialValue = {
     SysBP: 0,
     DiaBP: 0,
-    atDate: 0
+    atDate: -1
   };
+  lastReading: BloodPressureDataModel = this.initialValue;
+  errorMessage = '';
 
-  constructor(private inputParser: BloodPressureInputParserService, private classifier: BloodPressureClassifierService) {
-  }
+  constructor(private inputParser: BloodPressureInputParserService,
+              private classifier: BloodPressureClassifierService) {}
 
-  ngOnInit(): void {
-  }
-
-  parseData(evt: any) {
+  parseData() {
+    this.errorMessage = '';
+    this.lastReading = this.initialValue;
     const inputData = this.inputTextData.nativeElement.value;
-
-    console.log(inputData.trim());
-
     const result = this.inputParser.parse(inputData.trim());
-    console.log('RESULT');
-    console.log(result);
     if(result['error']){
-      console.log(result.error);
+      this.errorMessage = result.error;
       return;
     }
 
-    function compare (a: BloodPressureDataModel, b: BloodPressureDataModel) { return a.atDate - b.atDate ; }
-
-    result.sort(compare);
-    console.log(result);
-    this.lastReading = result.pop();
+    result.sort(this.compareBPObjects);
+    this.lastReading = result[result.length-1];
   }
+
+  compareBPObjects(a: BloodPressureDataModel, b: BloodPressureDataModel) { return a.atDate - b.atDate ; }
 
   classifyReading(){
     if(this.lastReading.DiaBP == 0 || this.lastReading.DiaBP == 0){

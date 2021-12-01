@@ -1,5 +1,4 @@
 import {BloodPressureDataModel} from "../model/blood-pressure-data.model";
-import {EgfrDataModel} from "../model/egfr-data.model";
 import {Classifier} from "../model/classifier";
 
 export class BloodPressureClassifierService implements Classifier{

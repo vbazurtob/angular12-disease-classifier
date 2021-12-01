@@ -1,6 +1,5 @@
 export function validateDateFormat(yyyy: string, mm: string, dd: string) {
     const year = parseInt(yyyy);
-    console.log(year);
     if (isNaN(year) || !Number.isInteger(year) || (year < 1000 || year > 9999)) {
         return 'Some dates have format error in the year. Check format. Should be yyyy';
     }
@@ -39,7 +38,7 @@ export function rewriteExceptionMsg(eMsg: string){
     if( eMsg.match(/SyntaxError: Unexpected token , in JSON/g) ){
         return 'Check the input format. A comma(,) might be added at the end of one } ' +
             'without specifying another full reading object such as {...}. Please remove the comma';
-    } else if (eMsg.match(/Unexpected token \{ in/g)){
+    } else if (eMsg.match(/Unexpected token \{ in/g) || eMsg.match(/Unexpected token \} in/g)){
         return 'Check the input format. A curly bracket({ or }) might be added in the wrong place. A proper ' +
             'reading object should have a beginning and ending curly bracket. e.g. { ... }';
     }
@@ -68,7 +67,7 @@ export function isInputStrArray(input: string){
 }
 
 export function inputContainsValidReadingObjects(inputData: string, regexpObj: RegExp){
-    const matchedArrObj = regexpObj.exec(inputData);
+    const matchedArrObj = inputData.match(regexpObj);
     return matchedArrObj === null || matchedArrObj === undefined || matchedArrObj[0] === null;
 }
 

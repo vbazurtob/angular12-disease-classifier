@@ -11,9 +11,9 @@
 
 {eGFR: 65, atDate: '2012/10/31'},
 {eGFR: 70, atDate: '2011/10/20'},
-{eGFR: 1220, atDate: '2013/10/20'},
+{eGFR: 999, atDate: '2013/10/20'},
 
-{eGFR: 0, atDate: '2001/10/20'},
+{eGFR: 1, atDate: '2001/10/20'},
 {eGFR: 120, atDate: '2019/10/20'}
 ]
 
@@ -29,9 +29,6 @@
     {{errorMessage}}
 </div>
 <div  *ngIf="errorMessage==''" class="results-container">
-
-
-
     <mat-card class="results-card" *ngIf="lastReading.atDate >= 0">
         <h3 class="headline2">Results</h3>
         <div  class="flex-row flex-space-between">
@@ -60,7 +57,7 @@
         </div>
     </mat-card>
 
-    <mat-table #table [dataSource]="drops" class="results-table" *ngIf="lastReading.atDate >= 0">
+    <mat-table [dataSource]="drops" class="results-table" *ngIf="lastReading.atDate >= 0">
 
         <ng-container matColumnDef="previous_e">
             <mat-header-cell *matHeaderCellDef> Previous eGFR </mat-header-cell>
@@ -102,3 +99,4 @@
     </mat-table>
 
 </div>
+<div>&nbsp;</div>

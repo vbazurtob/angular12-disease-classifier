@@ -16,7 +16,7 @@ import {EgfrDataClassifierService} from "./service/egfr-data-classifier.service"
   declarations: [
     AppComponent,
     HypertensionCalculatorComponent,
-    KidneyDiseaseCalculatorComponent
+    KidneyDiseaseCalculatorComponent,
   ],
   imports: [
     BrowserModule,
