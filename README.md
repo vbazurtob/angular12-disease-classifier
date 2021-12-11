@@ -1,5 +1,4 @@
 # Angular12 disease classifier
-Author: Voltaire Bazurto
 
 An angular 12 single app application that takes a json object as an input
 and classify a disease.
